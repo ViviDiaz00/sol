@@ -25,6 +25,60 @@
     la comprensión del lenguaje natural, y la percepción visual, entre otras. La IA se divide en varias subdisciplinas,
     como el aprendizaje automático (machine learning), la visión por computadora, y el procesamiento del lenguaje natural. 
 </P>
+<P>
+<H1>    CODIGO    </H1>
+   
+import tensorflow as tf     - tensorflow es la librería que contiene todas las herramientas para construir y entrenar redes neuronales.
+import numpy as np          - numpy es una librería para trabajar con arreglos numéricos y operaciones matemáticas.
+
+python
+celsius = np.array([-40, -10, 0, 8, 15, 22, 38], dtype=float)            
+fahrenheit = np.array([-40, 14, 32, 46, 59, 72, 100], dtype=float)
+ - Se crean dos arrays de numpy: uno con temperaturas en grados Celsius y otro con las correspondientes temperaturas en grados Fahrenheit. 
+ -Estos serán los datos con los que se entrena la red neuronal.
+    
+ #capa = tf.keras.layers.Dense(units=1, input_shape=[1])
+ #modelo = tf.keras.Sequential([capa])  - Este es un ejemplo comentado de cómo crear una red neuronal con una sola capa y una sola unidad de salida. Está comentado para mostrar cómo construir un modelo básico, pero no se usa en este código.
+
+   oculta1 = tf.keras.layers.Dense(units=3, input_shape=[1])  - Crea una capa densa (completamente conectada) con 3 neuronas (units=3). El argumento input_shape=[1] indica que la entrada tendrá un único valor (un número en grados Celsius).
+
+oculta2 = tf.keras.layers.Dense(units=3)  - Se añade una segunda capa densa, también con 3 neuronas. No se especifica input_shape porque TensorFlow puede inferirlo automáticamente de la salida de la capa anterior.
+salida = tf.keras.layers.Dense(units=1)    - Crea una capa de salida con una única neurona, que es la que proporcionará la predicción de temperatura en grados Fahrenheit.
+modelo = tf.keras.Sequential([oculta1, oculta2, salida])  - Define el modelo como una secuencia de capas. En este caso, el modelo tendrá las capas oculta1, oculta2, y la capa salida en ese orden.
+
+    modelo.compile(
+    optimizer=tf.keras.optimizers.Adam(0.1),  - Compila el modelo, especificando el optimizador Adam con una tasa de aprendizaje de 0.1.
+    loss='mean_squared_error')                - La función de pérdida elegida es mean_squared_error, que mide el error cuadrático medio entre las predicciones y los valores reales (es decir, entre los grados Fahrenheit predichos y los reales).
+
+
+print("Comenzando entrenamiento...")   - Imprime un mensaje indicando que el entrenamiento está comenzando.
+
+   
+
+
+historial = modelo.fit(celsius, fahrenheit, epochs=1000, verbose=False)  - Entrena el modelo usando los datos de entrada (Celsius) y salida (Fahrenheit).
+   - epochs=1000 indica que el modelo pasará por los datos de entrenamiento 1000 veces.
+   - verbose=False desactiva la impresión de los detalles de cada época en la consola.
+
+
+
+print("Modelo entrenado!")- Indica que el entrenamiento ha finalizado.
+
+
+import matplotlib.pyplot as plt
+plt.xlabel("# Epoca")
+plt.ylabel("Magnitud de pérdida")
+plt.plot(historial.history["loss"])
+
+   - Importa la librería matplotlib para graficar la evolución del entrenamiento.
+   - Configura las etiquetas para los ejes (# Epoca para el eje X y Magnitud de pérdida para el eje Y).
+   - Utiliza los datos almacenados en historial.history["loss"] para graficar la pérdida (error) a lo largo de las épocas.
+
+
+print("Hagamos una predicción!")
+   - Imprime un mensaje indicando que se va a realizar una predicción.
+    
+  </P>  
 
     
 </body>
